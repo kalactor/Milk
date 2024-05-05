@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Milk</string>
+    <string name="milk_edit_title">Edit Milk</string>
+    <string name="milk_entry_title">Add Milk</string>
+    <string name="required_fields">*required fields</string>
+    <string name="save_action">Save</string>
+    <string name="milk_detail_title">Milk Details</string>
+    <string name="attention">Attention</string>
+    <string name="delete_question">Are you sure you want to delete?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="date">Date</string>
+    <string name="buffalo">Buffalo</string>
+    <string name="cow">Cow</string>
+    <string name="delete">Delete</string>
+    <string name="no_milk_description">Oops!\nNo milk in the Dairy.\nTap + to add.</string>
+</resources>
