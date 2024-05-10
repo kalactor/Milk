@@ -10,6 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.rabarka.milk.ui.navigation.MilkNavHost
@@ -28,13 +30,22 @@ fun MilkTopAppBar(
     scrollBehavior: TopAppBarScrollBehavior? = null,
     navigateUp: () -> Unit = {}
 ) {
-    CenterAlignedTopAppBar(title = { Text(text = title) },
+    CenterAlignedTopAppBar(title = {
+        Text(
+            text = title,
+            fontSize = 36.sp,
+            fontWeight = FontWeight.Medium
+        )
+    },
         modifier = modifier,
         scrollBehavior = scrollBehavior,
         navigationIcon = {
             if (canNavigateBack) {
                 IconButton(onClick = navigateUp) {
-                    Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = null
+                    )
                 }
             }
         }

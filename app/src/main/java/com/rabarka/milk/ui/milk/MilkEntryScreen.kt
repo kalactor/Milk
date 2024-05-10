@@ -2,6 +2,7 @@ package com.rabarka.milk.ui.milk
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,14 +11,22 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.dimensionResource
@@ -28,6 +37,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rabarka.milk.MilkTopAppBar
 import com.rabarka.milk.R
 import com.rabarka.milk.ui.AppViewModelProvider
+import com.rabarka.milk.ui.home.convertLongToDate
 import com.rabarka.milk.ui.navigation.NavigationDestination
 import com.rabarka.milk.ui.theme.MilkTheme
 import kotlinx.coroutines.launch
@@ -114,24 +124,52 @@ fun MilkInputForm(
     onValueChange: (MilkDetails) -> Unit = {},
     enabled: Boolean = true
 ) {
+    var dateDialogController by remember {
+        mutableStateOf(false)
+    }
+    val dateState = rememberDatePickerState()
 
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_medium))
     ) {
-        OutlinedTextField(
-            value = milkDetails.date.toString(),
-            onValueChange = { onValueChange(milkDetails.copy(date =  Date().time)) },
-            label = { Text(text = "Date") },
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
-                unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
-                disabledContainerColor = MaterialTheme.colorScheme.secondaryContainer,
-            ),
+
+        Row(
             modifier = Modifier.fillMaxWidth(),
-            enabled = enabled,
-            singleLine = true
-        )
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(onClick = { dateDialogController = true }) {
+                Text(text = "Select Date")
+            }
+            Text(
+                text = "Date: ${convertLongToDate(milkDetails.date)}",
+                style = MaterialTheme.typography.bodyLarge,
+            )
+        }
+
+        if (dateDialogController) {
+            DatePickerDialog(
+                onDismissRequest = { dateDialogController = false },
+                confirmButton = {
+                    Button(onClick = {
+                        if (dateState.selectedDateMillis != null) {
+                            onValueChange(milkDetails.copy(date = dateState.selectedDateMillis!!))
+                        }
+                        dateDialogController = false
+                    }) {
+                        Text(text = "Confirm")
+                    }
+                },
+                dismissButton = {
+                    Button(onClick = { dateDialogController = false }) {
+                        Text(text = "Cancel")
+                    }
+                }
+            ) {
+                DatePicker(state = dateState)
+            }
+        }
         OutlinedTextField(
             value = milkDetails.buffalo,
             onValueChange = { onValueChange(milkDetails.copy(buffalo = it)) },
