@@ -1,11 +1,12 @@
 package com.rabarka.milk.data
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Milk::class], version = 1, exportSchema = false)
+@Database(entities = [Milk::class], version = 2, autoMigrations = [AutoMigration(from = 1, to = 2)])
 abstract class MilkDatabase : RoomDatabase() {
     abstract fun milkDao(): MilkDao
 
