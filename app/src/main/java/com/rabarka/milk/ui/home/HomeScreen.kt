@@ -189,9 +189,14 @@ private fun MilkListHeader(modifier: Modifier = Modifier) {
 
 @Composable
 private fun MilkItem(milk: Milk, modifier: Modifier = Modifier) {
+    var cardColor = MaterialTheme.colorScheme.surfaceVariant
+    if (milk.isAmavasya){
+        cardColor = MaterialTheme.colorScheme.surfaceTint
+    }
     Card(
         modifier = modifier,
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        colors = CardDefaults.cardColors(containerColor = cardColor)
     ) {
         Column(
             modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large)),

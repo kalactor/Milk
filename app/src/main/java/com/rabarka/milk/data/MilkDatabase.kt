@@ -12,14 +12,14 @@ abstract class MilkDatabase : RoomDatabase() {
 
     companion object {
         @Volatile
-        private var Instance: MilkDatabase? = null
+        private var INSTANCE: MilkDatabase? = null
 
         fun getDatabase(context: Context): MilkDatabase {
-            return Instance ?: synchronized(this) {
+            return INSTANCE ?: synchronized(this) {
                 Room.databaseBuilder(context, MilkDatabase::class.java, "milk_database")
                     .fallbackToDestructiveMigration()
                     .build()
-                    .also { Instance = it }
+                    .also { INSTANCE = it }
             }
         }
     }

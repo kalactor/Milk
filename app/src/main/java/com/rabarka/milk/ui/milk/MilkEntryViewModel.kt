@@ -39,7 +39,8 @@ data class MilkDetails(
     val id: Int = 0,
     val date: Long = Date().time,
     val buffalo: String = "",
-    val cow: String = ""
+    val cow: String = "",
+    val isAmavasya: Boolean = false
 )
 
 fun MilkDetails.toMilk(): Milk =
@@ -47,7 +48,8 @@ fun MilkDetails.toMilk(): Milk =
         id = id,
         date = date,
         buffalo = buffalo.toDoubleOrNull() ?: 0.0,
-        cow = cow.toDoubleOrNull() ?: 0.0
+        cow = cow.toDoubleOrNull() ?: 0.0,
+        isAmavasya = isAmavasya
     )
 
 fun Milk.toMilkUiState(isEntryValid: Boolean = false): MilkUiState =
@@ -61,5 +63,6 @@ fun Milk.toMilkDetails(): MilkDetails =
         id = id,
         date = date,
         buffalo = buffalo.toString(),
-        cow = cow.toString()
+        cow = cow.toString(),
+        isAmavasya = isAmavasya
     )
