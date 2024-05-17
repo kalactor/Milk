@@ -43,8 +43,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rabarka.milk.MilkTopAppBar
 import com.rabarka.milk.R
 import com.rabarka.milk.data.Milk
+import com.rabarka.milk.helpers.convertLongToDate
 import com.rabarka.milk.ui.AppViewModelProvider
-import com.rabarka.milk.ui.home.convertLongToDate
 import com.rabarka.milk.ui.navigation.NavigationDestination
 import kotlinx.coroutines.launch
 

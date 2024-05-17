@@ -41,11 +41,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rabarka.milk.MilkTopAppBar
 import com.rabarka.milk.R
 import com.rabarka.milk.data.Milk
+import com.rabarka.milk.helpers.convertLongToDate
 import com.rabarka.milk.ui.AppViewModelProvider
 import com.rabarka.milk.ui.navigation.NavigationDestination
-import java.text.SimpleDateFormat
-import java.util.Date
-
 object HomeDestination : NavigationDestination {
     override val route: String = "home"
     override val titleRes: Int = R.string.app_name
@@ -211,10 +209,4 @@ private fun MilkItem(milk: Milk, modifier: Modifier = Modifier) {
             }
         }
     }
-}
-
-fun convertLongToDate(time: Long): String {
-    val date = Date(time)
-    val format = SimpleDateFormat.getDateInstance()
-    return format.format(date)
 }

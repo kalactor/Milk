@@ -1,5 +1,6 @@
 package com.rabarka.milk.ui.milk
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,7 +14,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -31,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,8 +43,10 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rabarka.milk.MilkTopAppBar
 import com.rabarka.milk.R
+import com.rabarka.milk.helpers.convertLongToDate
+import com.rabarka.milk.helpers.getMonthName
+import com.rabarka.milk.helpers.months
 import com.rabarka.milk.ui.AppViewModelProvider
-import com.rabarka.milk.ui.home.convertLongToDate
 import com.rabarka.milk.ui.navigation.NavigationDestination
 import com.rabarka.milk.ui.theme.MilkTheme
 import kotlinx.coroutines.launch
@@ -131,6 +138,10 @@ fun MilkInputForm(
     }
     val dateState = rememberDatePickerState()
 
+    var monthSpinnerController by remember {
+        mutableStateOf(false)
+    }
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_medium))
@@ -209,6 +220,38 @@ fun MilkInputForm(
                 )
             )
         }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = "Select Month", fontSize = 24.sp, modifier = Modifier.weight(1f))
+            Text(
+                text = getMonthName(milkDetails.month),
+                fontSize = 24.sp,
+                modifier = Modifier.clickable { monthSpinnerController = true })
+                Icon(
+                    painter = painterResource(id = R.drawable.arrow_drop_down),
+                    contentDescription = null
+                )
+        }
+
+        DropdownMenu(
+            expanded = monthSpinnerController,
+            onDismissRequest = { monthSpinnerController = false }) {
+            months.forEach { month ->
+                DropdownMenuItem(
+                    text = { Text(text = month.first) },
+                    onClick = {
+                        onValueChange(milkDetails.copy(month = month.second))
+                        monthSpinnerController = false
+                    }
+                )
+            }
+        }
+
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,

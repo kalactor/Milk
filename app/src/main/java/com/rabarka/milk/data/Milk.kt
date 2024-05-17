@@ -12,5 +12,7 @@ data class Milk(
     val buffalo: Double,
     val cow: Double,
     @ColumnInfo(name = "isAmavasya", defaultValue = "false")
-    val isAmavasya: Boolean = false
+    val isAmavasya: Boolean = false,
+    @ColumnInfo(defaultValue = "0")
+    val month: Int
 )

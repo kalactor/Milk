@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.rabarka.milk.data.Milk
 import com.rabarka.milk.data.MilkRepository
+import com.rabarka.milk.helpers.getCurrentMonthNumber
 import java.util.Date
 
 class MilkEntryViewModel(private val milkRepository: MilkRepository) : ViewModel() {
@@ -40,7 +41,8 @@ data class MilkDetails(
     val date: Long = Date().time,
     val buffalo: String = "",
     val cow: String = "",
-    val isAmavasya: Boolean = false
+    val isAmavasya: Boolean = false,
+    val month: Int = getCurrentMonthNumber()
 )
 
 fun MilkDetails.toMilk(): Milk =
@@ -49,7 +51,8 @@ fun MilkDetails.toMilk(): Milk =
         date = date,
         buffalo = buffalo.toDoubleOrNull() ?: 0.0,
         cow = cow.toDoubleOrNull() ?: 0.0,
-        isAmavasya = isAmavasya
+        isAmavasya = isAmavasya,
+        month = month
     )
 
 fun Milk.toMilkUiState(isEntryValid: Boolean = false): MilkUiState =
@@ -64,5 +67,6 @@ fun Milk.toMilkDetails(): MilkDetails =
         date = date,
         buffalo = buffalo.toString(),
         cow = cow.toString(),
-        isAmavasya = isAmavasya
+        isAmavasya = isAmavasya,
+        month = month
     )

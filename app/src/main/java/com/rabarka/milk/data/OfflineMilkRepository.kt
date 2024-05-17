@@ -3,6 +3,11 @@ package com.rabarka.milk.data
 import kotlinx.coroutines.flow.Flow
 
 class OfflineMilkRepository(private val milkDao: MilkDao) : MilkRepository {
+
+    override fun getMilkByMonth(month: Int): Flow<List<Milk>> {
+        return milkDao.getMilkByMonth(month = month)
+    }
+
     override fun getAllMilkStream(): Flow<List<Milk>> {
         return milkDao.getAllMilk()
     }

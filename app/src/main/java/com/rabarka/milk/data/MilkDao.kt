@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MilkDao {
+    @Query("SELECT * from milk WHERE month = :month")
+    fun getMilkByMonth(month: Int): Flow<List<Milk>>
+
     @Query("SELECT * from milk ORDER BY date DESC")
     fun getAllMilk(): Flow<List<Milk>>
 
