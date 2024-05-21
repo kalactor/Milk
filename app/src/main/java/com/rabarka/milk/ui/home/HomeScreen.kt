@@ -44,6 +44,7 @@ import com.rabarka.milk.data.Milk
 import com.rabarka.milk.helpers.convertLongToDate
 import com.rabarka.milk.ui.AppViewModelProvider
 import com.rabarka.milk.ui.navigation.NavigationDestination
+
 object HomeDestination : NavigationDestination {
     override val route: String = "home"
     override val titleRes: Int = R.string.app_name
@@ -170,7 +171,7 @@ private fun MilkListHeader(modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.SpaceAround
         ) {
             Text(
-                text =  "Date",
+                text = "Date",
                 style = MaterialTheme.typography.headlineLarge
             )
             Text(
@@ -188,7 +189,7 @@ private fun MilkListHeader(modifier: Modifier = Modifier) {
 @Composable
 private fun MilkItem(milk: Milk, modifier: Modifier = Modifier) {
     var cardColor = MaterialTheme.colorScheme.surfaceVariant
-    if (milk.isAmavasya){
+    if (milk.isAmavasya) {
         cardColor = MaterialTheme.colorScheme.surfaceTint
     }
     Card(
@@ -201,7 +202,10 @@ private fun MilkItem(milk: Milk, modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small))
         ) {
             Row(modifier = Modifier.fillMaxWidth()) {
-                Text(text = convertLongToDate(milk.date), style = MaterialTheme.typography.titleMedium)
+                Text(
+                    text = convertLongToDate(milk.date),
+                    style = MaterialTheme.typography.titleMedium
+                )
                 Spacer(modifier = Modifier.weight(0.5f))
                 Text(text = milk.buffalo.toString(), style = MaterialTheme.typography.titleMedium)
                 Spacer(modifier = Modifier.weight(1f))
