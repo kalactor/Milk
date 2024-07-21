@@ -50,3 +50,11 @@ fun convertLongToDate(time: Long): String {
     val format = SimpleDateFormat.getDateInstance()
     return format.format(date)
 }
+
+fun formatIfNoDecimalValue(value: Double): String {
+    return if (value == value.toInt().toDouble()) {
+        value.toInt().toString()
+    } else {
+        value.toString()
+    }
+}

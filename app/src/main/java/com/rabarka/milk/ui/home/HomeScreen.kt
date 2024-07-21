@@ -17,8 +17,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -29,6 +33,9 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -37,11 +44,14 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rabarka.milk.MilkTopAppBar
 import com.rabarka.milk.R
 import com.rabarka.milk.data.Milk
 import com.rabarka.milk.helpers.convertLongToDate
+import com.rabarka.milk.helpers.months
 import com.rabarka.milk.ui.AppViewModelProvider
 import com.rabarka.milk.ui.navigation.NavigationDestination
 
@@ -62,13 +72,23 @@ fun HomeScreen(
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
+    var monthSpinnerController by remember { mutableStateOf(false) }
+    var moneyShower by remember { mutableStateOf(false) }
+
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             MilkTopAppBar(
                 title = stringResource(id = HomeDestination.titleRes),
                 canNavigateBack = false,
-                scrollBehavior = scrollBehavior
+                isHomeScreen = true,
+                scrollBehavior = scrollBehavior,
+                onMoneyClick = {
+                    moneyShower = true
+                },
+                onDateRangeClick = {
+                    monthSpinnerController = true
+                }
             )
         },
         floatingActionButton = {
@@ -88,6 +108,62 @@ fun HomeScreen(
             }
         }
     ) { innerPadding ->
+        if (moneyShower) {
+            AlertDialog(
+                onDismissRequest = { moneyShower = false },
+                text = {
+                    Column {
+                        val milkRevenue = viewModel.calculateMilkRevenue()
+
+                        Text(
+                            text = "Buffalo Milk: ${milkRevenue.second} L",
+                            fontSize = 24.sp
+                        )
+                        Text(
+                            text = "Buffalo Price: Rs ${milkRevenue.first.first}",
+                            fontSize = 24.sp
+                        )
+                        Text(
+                            text = "Cow Milk: ${milkRevenue.third} L",
+                            fontSize = 24.sp
+                        )
+                        Text(
+                            text = "Cow Price: Rs ${milkRevenue.first.second}",
+                            fontSize = 24.sp
+                        )
+                        Text(
+                            text = "Total: Rs ${milkRevenue.first.first + milkRevenue.first.second}",
+                            fontSize = 24.sp
+                        )
+                    }
+                },
+                confirmButton = {
+                    Button(onClick = { moneyShower = false }
+                    ) {
+                        Text("Close")
+                    }
+                },
+                properties = DialogProperties(
+                    dismissOnBackPress = true,
+                    dismissOnClickOutside = true
+                )
+            )
+        }
+        DropdownMenu(
+            expanded = monthSpinnerController,
+            onDismissRequest = { monthSpinnerController = false }) {
+            val myList: MutableList<Pair<String, Int>> = months.toMutableList()
+            myList.add(Pair("All", 12))
+            myList.forEach { month ->
+                DropdownMenuItem(
+                    text = { Text(text = month.first) },
+                    onClick = {
+                        viewModel.setMonthNumber(month.second)
+                        monthSpinnerController = false
+                    }
+                )
+            }
+        }
         HomeBody(
             milkList = homeUiState.milkList,
             onMilkClick = navigateToMilkUpdate,
