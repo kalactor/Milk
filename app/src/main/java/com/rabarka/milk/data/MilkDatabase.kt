@@ -1,12 +1,15 @@
 package com.rabarka.milk.data
 
 import android.content.Context
-import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Milk::class], version = 3, autoMigrations = [AutoMigration(from = 2, to = 3)])
+@Database(
+    entities = [MilkRecord::class, Counterparty::class],
+    version = 5,
+    exportSchema = true
+)
 abstract class MilkDatabase : RoomDatabase() {
     abstract fun milkDao(): MilkDao
 
@@ -17,7 +20,7 @@ abstract class MilkDatabase : RoomDatabase() {
         fun getDatabase(context: Context): MilkDatabase {
             return INSTANCE ?: synchronized(this) {
                 Room.databaseBuilder(context, MilkDatabase::class.java, "milk_database")
-                    .fallbackToDestructiveMigration()
+                    .fallbackToDestructiveMigration(dropAllTables = true)
                     .build()
                     .also { INSTANCE = it }
             }

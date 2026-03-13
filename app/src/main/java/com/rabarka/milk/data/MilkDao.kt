@@ -10,21 +10,33 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MilkDao {
-    @Query("SELECT * from milk WHERE month = :month ORDER BY date DESC")
-    fun getMilkByMonth(month: Int): Flow<List<Milk>>
+    @Query("SELECT * FROM milk_records WHERE month = :month AND year = :year ORDER BY timestamp DESC")
+    fun getRecordsByMonth(month: Int, year: Int): Flow<List<MilkRecord>>
 
-    @Query("SELECT * from milk ORDER BY date DESC")
-    fun getAllMilk(): Flow<List<Milk>>
+    @Query("SELECT * FROM milk_records ORDER BY timestamp DESC")
+    fun getAllRecords(): Flow<List<MilkRecord>>
 
-    @Query("SELECT * from milk WHERE id = :id")
-    fun getMilk(id: Int): Flow<Milk>
+    @Query("SELECT * FROM milk_records WHERE id = :id")
+    fun getRecord(id: Int): Flow<MilkRecord>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertMilk(milk: Milk)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertRecord(record: MilkRecord)
 
     @Update
-    suspend fun updateMilk(milk: Milk)
+    suspend fun updateRecord(record: MilkRecord)
 
     @Delete
-    suspend fun deleteMilk(milk: Milk)
+    suspend fun deleteRecord(record: MilkRecord)
+
+    @Query("SELECT * FROM counterparties ORDER BY name COLLATE NOCASE ASC")
+    fun getAllCounterparties(): Flow<List<Counterparty>>
+
+    @Query("SELECT * FROM counterparties WHERE role IN (:roles) ORDER BY name COLLATE NOCASE ASC")
+    fun getCounterpartiesByRoles(roles: List<String>): Flow<List<Counterparty>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertCounterparty(counterparty: Counterparty): Long
+
+    @Delete
+    suspend fun deleteCounterparty(counterparty: Counterparty)
 }

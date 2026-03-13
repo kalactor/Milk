@@ -1,17 +1,141 @@
 <resources>
-    <string name="app_name">Milk</string>
-    <string name="milk_edit_title">Edit Milk</string>
-    <string name="milk_entry_title">Add Milk</string>
-    <string name="required_fields">*required fields</string>
-    <string name="save_action">Save</string>
-    <string name="milk_detail_title">Milk Details</string>
+    <string name="app_name">Milk Manager</string>
+
+    <string name="record_edit_title">Edit Record</string>
+    <string name="record_entry_title">Add Record</string>
+    <string name="record_detail_title">Record Details</string>
+
+    <string name="required_fields">Required: pick a contact and enter at least one milk quantity.</string>
+    <string name="save_action">Save Record</string>
+
     <string name="attention">Attention</string>
-    <string name="delete_question">Are you sure you want to delete?</string>
+    <string name="delete_question">Delete this record permanently?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
-    <string name="date">Date</string>
-    <string name="buffalo">Buffalo</string>
-    <string name="cow">Cow</string>
+    <string name="cancel_action">Cancel</string>
+    <string name="save_action_short">Save</string>
     <string name="delete">Delete</string>
-    <string name="no_milk_description">Oops!\nNo milk in the Dairy.\nTap + to add.</string>
+
+    <string name="date_time">Date &amp; Time</string>
+    <string name="transaction_type">Type</string>
+    <string name="party_name">Contact Name</string>
+    <string name="buyer_name">Buyer Name</string>
+    <string name="seller_name">Seller Name</string>
+    <string name="phone_number">Phone Number</string>
+
+    <string name="transaction_sold">Sold</string>
+    <string name="transaction_bought">Bought</string>
+
+    <string name="collection_type">Collection</string>
+    <string name="collection_morning">Morning</string>
+    <string name="collection_evening">Evening</string>
+
+    <string name="cow">Cow</string>
+    <string name="buffalo">Buffalo</string>
+    <string name="cow_liters">Cow (L)</string>
+    <string name="cow_fat">Cow Fat %</string>
+    <string name="buffalo_liters">Buffalo (L)</string>
+    <string name="buffalo_fat">Buffalo Fat %</string>
+
+    <string name="pick_from_contacts">Pick from Contacts</string>
+    <string name="share_on_whatsapp">Send on WhatsApp</string>
+    <string name="share_other_apps">Share via Other Apps</string>
+    <string name="phone_missing_for_whatsapp">Add phone number to send directly on WhatsApp.</string>
+
+    <string name="select_date">Select Date</string>
+    <string name="select_time">Select Time</string>
+    <string name="note">Note</string>
+    <string name="note_optional">Note (optional)</string>
+
+    <string name="records_tab">Records</string>
+    <string name="analytics_tab">Analytics</string>
+    <string name="calendar_tab">Calendar</string>
+    <string name="analytics_controls_title">Analytics Controls</string>
+    <string name="analytics_period_selected_month">Selected Month</string>
+    <string name="analytics_period_custom_range">Custom Range</string>
+    <string name="analytics_snapshot_month">Month Snapshot</string>
+    <string name="analytics_snapshot_range">Range Snapshot</string>
+    <string name="analytics_net_flow">Net Flow</string>
+    <string name="analytics_entries">Entries</string>
+    <string name="analytics_from">From</string>
+    <string name="analytics_to">To</string>
+    <string name="analytics_range_trend">Range Trend</string>
+    <string name="filter_all">All</string>
+    <string name="mode_seller_view_only">Seller mode: showing sold records only</string>
+    <string name="mode_buyer_view_only">Buyer mode: showing bought records only</string>
+    <string name="calendar_overview_title">Month Coverage</string>
+    <string name="calendar_recorded_days">Days Added</string>
+    <string name="calendar_missing_days">Days Missed</string>
+    <string name="calendar_day_added">Milk added</string>
+    <string name="calendar_day_missing">No entry</string>
+
+    <string name="total_liters">Total</string>
+    <string name="no_records_description">No records in this month.
+Tap + to add one.</string>
+
+    <string name="analytics_total_entries">Total Entries</string>
+    <string name="analytics_total_sold_liters">Total Sold (L)</string>
+    <string name="analytics_total_bought_liters">Total Bought (L)</string>
+    <string name="analytics_cow_liters_and_fat">Cow Volume &amp; Avg Fat</string>
+    <string name="analytics_buffalo_liters_and_fat">Buffalo Volume &amp; Avg Fat</string>
+    <string name="analytics_last_six_months">Last 6 Months Trend</string>
+
+    <string name="form_section_transaction">Transaction</string>
+    <string name="form_section_schedule">Schedule</string>
+    <string name="form_section_milk">Milk Quantity</string>
+
+    <string name="profile_title">Saved Profile</string>
+    <string name="owner_name">Owner Name</string>
+    <string name="primary_contact_name">Primary Contact Name</string>
+    <string name="profile_setup_title">One-Time Profile Setup</string>
+    <string name="profile_setup_subtitle_seller">Save your seller profile and buyer contact once. Daily entries will only need date/time and quantity.</string>
+    <string name="profile_setup_subtitle_buyer">Save your buyer profile and seller contact once. Daily entries will only need date/time and quantity.</string>
+    <string name="profile_setup_subtitle_both">Save your profile and primary contact once. Daily entries will only need date/time and quantity.</string>
+    <string name="save_profile">Save Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="fat_optional_section">Fat details (optional)</string>
+
+    <string name="onboarding_title">Welcome to Milk Ledger</string>
+    <string name="onboarding_step_account_type">Step 1 of 2: Choose account type</string>
+    <string name="onboarding_step_user_mode">Choose how you want to use this app.</string>
+    <string name="account_individual">Individual</string>
+    <string name="account_business">Business</string>
+    <string name="account_individual_desc">Simple setup for personal milk tracking.</string>
+    <string name="account_business_desc">For organized daily operations and reporting.</string>
+    <string name="mode_buyer">Buyer</string>
+    <string name="mode_seller">Seller</string>
+    <string name="mode_both">Both</string>
+    <string name="mode_buyer_desc">Best if you mainly buy milk from sellers.</string>
+    <string name="mode_seller_desc">Best if you mainly sell milk to buyers.</string>
+    <string name="mode_both_desc">Use both bought and sold records in one app.</string>
+    <string name="continue_action">Continue</string>
+    <string name="back_action">Back</string>
+    <string name="finish_action">Finish</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_mode_section">Working Mode</string>
+    <string name="settings_account_type_section">Account Type</string>
+    <string name="save_settings">Save Settings</string>
+    <string name="settings_saved">Settings updated</string>
+
+    <string name="counterparties_title">Buyers &amp; Sellers</string>
+    <string name="no_counterparties">No contacts yet. Add buyers or sellers to speed up entries.</string>
+    <string name="add_buyer">Add Buyer</string>
+    <string name="add_seller">Add Seller</string>
+    <string name="counterparty_name">Name</string>
+    <string name="counterparty_phone_optional">Phone (optional)</string>
+    <string name="add_counterparty_title">Add Contact</string>
+    <string name="add_contact">Add Contact</string>
+    <string name="counterparty_role">Role</string>
+    <string name="remove_counterparty">Remove contact</string>
+    <string name="delete_counterparty_title">Delete contact?</string>
+    <string name="delete_counterparty_message">Remove %1$s from saved contacts? This will not delete existing milk records.</string>
+
+    <string name="entry_counterparty_section">Counterparty</string>
+    <string name="select_buyer">Select buyer</string>
+    <string name="select_seller">Select seller</string>
+    <string name="add_new_buyer">Add New Buyer</string>
+    <string name="add_new_seller">Add New Seller</string>
+    <string name="entry_mode_locked_seller">Seller mode: transaction is fixed to Sold.</string>
+    <string name="entry_mode_locked_buyer">Buyer mode: transaction is fixed to Bought.</string>
 </resources>

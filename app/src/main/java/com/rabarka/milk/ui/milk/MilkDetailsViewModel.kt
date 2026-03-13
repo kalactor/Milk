@@ -4,13 +4,15 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rabarka.milk.data.MilkRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
-class MilkDetailsViewModel(
+@HiltViewModel
+class MilkDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val milkRepository: MilkRepository
 ) : ViewModel() {
@@ -18,7 +20,7 @@ class MilkDetailsViewModel(
     private val milkId: Int = checkNotNull(savedStateHandle[MilkDetailsDestination.milkIdArg])
 
     val uiState: StateFlow<MilkDetailsUiState> =
-        milkRepository.getMilkStream(milkId).filterNotNull().map {
+        milkRepository.getRecordStream(milkId).map {
             MilkDetailsUiState(milkDetails = it.toMilkDetails())
         }.stateIn(
             scope = viewModelScope,
@@ -27,13 +29,12 @@ class MilkDetailsViewModel(
         )
 
     suspend fun deleteMilk() {
-        milkRepository.deleteMilk(uiState.value.milkDetails.toMilk())
+        milkRepository.deleteRecord(uiState.value.milkDetails.toMilkRecord())
     }
 
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
     }
-
 }
 
 data class MilkDetailsUiState(

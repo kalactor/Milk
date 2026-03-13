@@ -3,15 +3,23 @@ package com.rabarka.milk.data
 import kotlinx.coroutines.flow.Flow
 
 interface MilkRepository {
-    fun getMilkByMonth(month: Int): Flow<List<Milk>>
+    fun getRecordsByMonth(month: Int, year: Int): Flow<List<MilkRecord>>
 
-    fun getAllMilkStream(): Flow<List<Milk>>
+    fun getAllRecordsStream(): Flow<List<MilkRecord>>
 
-    fun getMilkStream(id: Int): Flow<Milk>
+    fun getRecordStream(id: Int): Flow<MilkRecord>
 
-    suspend fun insertMilk(milk: Milk)
+    suspend fun insertRecord(record: MilkRecord)
 
-    suspend fun updateMilk(milk: Milk)
+    suspend fun updateRecord(record: MilkRecord)
 
-    suspend fun deleteMilk(milk: Milk)
+    suspend fun deleteRecord(record: MilkRecord)
+
+    fun getCounterpartiesStream(): Flow<List<Counterparty>>
+
+    fun getCounterpartiesForTransactionStream(transactionType: TransactionType): Flow<List<Counterparty>>
+
+    suspend fun upsertCounterparty(counterparty: Counterparty): Long
+
+    suspend fun deleteCounterparty(counterparty: Counterparty)
 }

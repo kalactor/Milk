@@ -4,29 +4,56 @@ import kotlinx.coroutines.flow.Flow
 
 class OfflineMilkRepository(private val milkDao: MilkDao) : MilkRepository {
 
-    override fun getMilkByMonth(month: Int): Flow<List<Milk>> {
-        return milkDao.getMilkByMonth(month = month)
+    override fun getRecordsByMonth(month: Int, year: Int): Flow<List<MilkRecord>> {
+        return milkDao.getRecordsByMonth(month = month, year = year)
     }
 
-    override fun getAllMilkStream(): Flow<List<Milk>> {
-        return milkDao.getAllMilk()
+    override fun getAllRecordsStream(): Flow<List<MilkRecord>> {
+        return milkDao.getAllRecords()
     }
 
-    override fun getMilkStream(id: Int): Flow<Milk> {
-        return milkDao.getMilk(id)
+    override fun getRecordStream(id: Int): Flow<MilkRecord> {
+        return milkDao.getRecord(id)
     }
 
-    override suspend fun insertMilk(milk: Milk) {
-        return milkDao.insertMilk(milk)
+    override suspend fun insertRecord(record: MilkRecord) {
+        return milkDao.insertRecord(record)
     }
 
-    override suspend fun updateMilk(milk: Milk) {
-        return milkDao.updateMilk(milk)
+    override suspend fun updateRecord(record: MilkRecord) {
+        return milkDao.updateRecord(record)
     }
 
-    override suspend fun deleteMilk(milk: Milk) {
-        return milkDao.deleteMilk(milk)
+    override suspend fun deleteRecord(record: MilkRecord) {
+        return milkDao.deleteRecord(record)
     }
 
+    override fun getCounterpartiesStream(): Flow<List<Counterparty>> {
+        return milkDao.getAllCounterparties()
+    }
 
+    override fun getCounterpartiesForTransactionStream(
+        transactionType: TransactionType
+    ): Flow<List<Counterparty>> {
+        val roles = when (transactionType) {
+            TransactionType.SOLD -> listOf(
+                CounterpartyRole.BUYER.name,
+                CounterpartyRole.BOTH.name
+            )
+
+            TransactionType.BOUGHT -> listOf(
+                CounterpartyRole.SELLER.name,
+                CounterpartyRole.BOTH.name
+            )
+        }
+        return milkDao.getCounterpartiesByRoles(roles)
+    }
+
+    override suspend fun upsertCounterparty(counterparty: Counterparty): Long {
+        return milkDao.upsertCounterparty(counterparty)
+    }
+
+    override suspend fun deleteCounterparty(counterparty: Counterparty) {
+        milkDao.deleteCounterparty(counterparty)
+    }
 }
